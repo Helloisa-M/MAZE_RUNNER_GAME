@@ -1,4 +1,3 @@
-
 import time
 #Digite no terminal pip install rich para instalar a biblioteca
 from rich.console import Console
@@ -101,3 +100,18 @@ while True:
         console.print("[bold red]Opção inválida![/bold red]")
 
    
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
