@@ -1,4 +1,3 @@
-
 import time
 #Digite no terminal pip install rich para instalar a biblioteca
 from rich.console import Console
@@ -34,6 +33,3 @@ def criar_labirinto():
         [1, 1, 1, 1, 0, 1]
     ]
     return labirinto
-def exibir_labirinto():
-
-   
