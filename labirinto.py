@@ -14,9 +14,14 @@ def menu():
     console.print("[bold green]MENU[/bold green]")
 
     print("1. Jogar")
-    print("2. Escolher/Trocar Personagem")
-    print("3. Exibir Instruções")
-    print("4. Sair")
+    print("Escolher Personagem")
+    print("1 - Thomas")
+    print("2 - Minho")
+    print("3 - Newt")
+    print("4 - Teresa")
+    print("5 - Gally")
+    print("6. Exibir Instruções")
+    print("0 - Sair") 
     
     return int(input("Escolha uma opção: "))
 
