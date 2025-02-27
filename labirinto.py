@@ -9,7 +9,7 @@ def introducao():
         "Você desperta em um elevador em movimento...\n"
         "As portas se abrem e um grupo de garotos te encara.\n"
         "Você está na Clareira, um lugar cercado por um labirinto mortal.\n"
-        "Ninguém sabe como chegou aqui. Sua única saída é encontrar um caminho para a saída.\n"
+        "Ninguém sabe como chegou aqui. Sua única saída é encontrar um caminho para a liberdade.\n"
     )
     time.sleep(2)
 
@@ -24,7 +24,7 @@ def escolher_personagem():
     }
 
     for num, (nome, _, cor) in personagens.items():
-        console.print(f"[bold {cor}]❤ {num}. {nome}[/bold {cor}]")
+        console.print(f"[bold {cor}] {num}. {nome}[/bold {cor}]")
 
     escolha_p = input("\n🎮 Escolha um personagem: ")
 
