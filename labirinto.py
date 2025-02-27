@@ -121,6 +121,6 @@ def jogo_labirinto():
             console.print("🎉 [bold gold]Parabéns! Você encontrou a saída![/bold gold] 🎊")
             break
 
-if _name_ == "_main_":
+if __name__ == "_main_":
     introducao()
-    exibir_menu()
+    exibir_menu()
