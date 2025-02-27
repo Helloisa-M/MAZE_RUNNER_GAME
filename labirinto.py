@@ -48,11 +48,11 @@ def exibir_instrucoes():
 def exibir_menu():
     while True:
         console.print("\n🎮 [bold cyan]--- MENU ---[/bold cyan] 🎮")
-        console.print("⿡  Jogar")
-        console.print("⿢  Selecionar Personagem")
-        console.print("⿣  Instruções")
-        console.print("⿤  Carregar Jogo")
-        console.print("⿥  Sair 🚪")
+        console.print("⿡ 1. Jogar")
+        console.print("⿢ 2. Selecionar Personagem")
+        console.print("⿣ 3. Instruções")
+        console.print("⿤ 4. Carregar Jogo")
+        console.print("⿥ 5. Sair 🚪")
 
         opcao = input("\n📌 Escolha uma opção: ")
 
@@ -121,6 +121,7 @@ def jogo_labirinto():
             console.print("🎉 [bold gold]Parabéns! Você encontrou a saída![/bold gold] 🎊")
             break
 
-if __name__ == "_main_":
+if __name__ == "__main__":
+
     introducao()
     exibir_menu()
