@@ -125,8 +125,18 @@ def jogo_labirinto(personagem):
     gerar_saida(labirinto, 20, 22)
 
     jogador = (1, 1)  
+    tempo_inicio = time.time()  
     while True:
+        tempo_decorrido = time.time() - tempo_inicio
+        tempo_restante = 60 - tempo_decorrido
+
+        if tempo_restante <= 0:
+            imprimir_labirinto(labirinto, jogador, inicial_personagem, cor_personagem)
+            console.print("\n[bold red]💥 O tempo acabou! Você não conseguiu sair a tempo![/bold red] 💥")
+            break
+
         imprimir_labirinto(labirinto, jogador, inicial_personagem, cor_personagem)
+        console.print(f"\n⏰ [bold yellow]Tempo restante: {int(tempo_restante)} segundos[/bold yellow]")
         movimento = input("\n🎯 Use W A S D para mover ou 'sair' para encerrar o jogo: ").strip().upper()
         
         i, j = jogador 
