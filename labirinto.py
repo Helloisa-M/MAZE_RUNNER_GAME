@@ -1,13 +1,24 @@
 import time
 import csv
+import random
+import os
 from rich.console import Console
 
 console = Console()
+
 
 def carregar_labirinto(labirinto):
     with open(labirinto, newline='') as arquivo:
         leitor = csv.reader(arquivo)
         return [list(linha[0]) for linha in leitor]
+    
+def gerar_saida(labirinto, colunas, linhas):
+    while True:
+      posicao_c =  random.randint(0, colunas)
+      posicao_l =  random.randint(0, linhas)
+      if labirinto[posicao_l][posicao_c] == " " and (posicao_l != 1 and posicao_c != 1):
+          labirinto[posicao_l][posicao_c] = "🚪"
+          break
 
 def introducao():
     console.print("\n🌿 [bold green]BEM-VINDO À CLAREIRA[/bold green] 🌿")
@@ -20,6 +31,7 @@ def introducao():
     time.sleep(2)
 
 def escolher_personagem():
+    os.system('cls')
     console.print("\n✨ [bold cyan]Escolha seu personagem[/bold cyan] ✨")
     personagens = {
         "1": ("Thomas", "T", "red"),
@@ -28,19 +40,22 @@ def escolher_personagem():
         "4": ("Teresa", "T", "cyan"),
         "5": ("Gally", "G", "magenta"),
     }
-
+    
     for num, (nome, _, cor) in personagens.items():
         console.print(f"[bold {cor}] {num}. {nome}[/bold {cor}]")
-
+    
     escolha_p = input("\n🎮 Escolha um personagem: ")
 
     if escolha_p in personagens:
+        os.system('cls')
         personagem = personagens[escolha_p]
         console.print(f"\n🚀 [bold yellow]Prepare-se para sua aventura, {personagem[0]}![/bold yellow] 🎉")
         return personagem[1], personagem[2]
+        
     else:
         console.print("[bold red]❌ Opção inválida! Tente novamente.[/bold red]")
         return None, None
+    
 
 def exibir_instrucoes():
     console.print("\n📜 [bold yellow]--- INSTRUÇÕES ---[/bold yellow] 📜")
@@ -50,6 +65,7 @@ def exibir_instrucoes():
     console.print("   🔽 S > Mover para baixo")
     console.print("   ◀ A > Mover para a esquerda")
     console.print("   ▶ D > Mover para a direita")
+    
 
 def exibir_menu():
     personagem = None
@@ -61,24 +77,31 @@ def exibir_menu():
         console.print("⿤ 4. Sair 🚪")
 
         opcao = input("\n📌 Escolha uma opção: ")
-        time.sleep(2)
+        
 
         if opcao == "1":
+            os.system('cls')
             if personagem:
                 jogo_labirinto(personagem)
             else:
                 console.print("[bold red]❌ Você precisa escolher um personagem primeiro![/bold red]")
         elif opcao == "2":
+            os.system('cls')
             personagem = escolher_personagem()
         elif opcao == "3":
+            os.system('cls')
             exibir_instrucoes()
         elif opcao == "4":
+            os.system('cls')
             console.print("\n👋 [bold red]Saindo do jogo...[/bold red] ✨\n")
             break
         else:
             console.print("[bold red]❌ Opção inválida! Tente novamente.[/bold red]")
 
+
 def imprimir_labirinto(labirinto, jogador, inicial_personagem, cor_personagem):
+    os.system('cls')
+
     for i, linha in enumerate(labirinto):
         linha_formatada = ""
         for j, celula in enumerate(linha):
@@ -99,6 +122,7 @@ def jogo_labirinto(personagem):
     console.print("\n🏃‍♂ [bold blue]Você entrou no labirinto! Encontre a saída antes que as portas se fechem![/bold blue] 🏃‍♂")
 
     labirinto = carregar_labirinto('labirinto.csv')
+    gerar_saida(labirinto, 20, 22)
 
     jogador = (1, 1)  
     while True:
@@ -125,7 +149,7 @@ def jogo_labirinto(personagem):
         if movimento_valido(labirinto, nova_posicao):
             jogador = nova_posicao
 
-        if labirinto[jogador[0]][jogador[1]] == 'S':
+        if labirinto[jogador[0]][jogador[1]] == '🚪':
             imprimir_labirinto(labirinto, jogador, inicial_personagem, cor_personagem)
             console.print("🎉 [bold gold]Parabéns! Você encontrou a saída![/bold gold] 🎊")
             break
@@ -133,3 +157,4 @@ def jogo_labirinto(personagem):
 if __name__ == "__main__":
     introducao()
     exibir_menu()
+    
