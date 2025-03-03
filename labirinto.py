@@ -1,7 +1,13 @@
 import time
+import csv
 from rich.console import Console
 
 console = Console()
+
+def carregar_labirinto(labirinto):
+    with open(labirinto, newline='') as arquivo:
+        leitor = csv.reader(arquivo)
+        return [list(linha[0]) for linha in leitor]
 
 def introducao():
     console.print("\n🌿 [bold green]BEM-VINDO À CLAREIRA[/bold green] 🌿")
@@ -46,32 +52,33 @@ def exibir_instrucoes():
     console.print("   ▶ D > Mover para a direita")
 
 def exibir_menu():
+    personagem = None
     while True:
         console.print("\n🎮 [bold cyan]--- MENU ---[/bold cyan] 🎮")
         console.print("⿡ 1. Jogar")
         console.print("⿢ 2. Selecionar Personagem")
         console.print("⿣ 3. Instruções")
-        console.print("⿤ 4. Carregar Jogo")
-        console.print("⿥ 5. Sair 🚪")
+        console.print("⿤ 4. Sair 🚪")
 
         opcao = input("\n📌 Escolha uma opção: ")
+        time.sleep(2)
 
         if opcao == "1":
-            jogo_labirinto()
+            if personagem:
+                jogo_labirinto(personagem)
+            else:
+                console.print("[bold red]❌ Você precisa escolher um personagem primeiro![/bold red]")
         elif opcao == "2":
-            global inicial_personagem, cor_personagem
-            inicial_personagem, cor_personagem = escolher_personagem()
+            personagem = escolher_personagem()
         elif opcao == "3":
             exibir_instrucoes()
         elif opcao == "4":
-            jogo_labirinto()
-        elif opcao == "5":
             console.print("\n👋 [bold red]Saindo do jogo...[/bold red] ✨\n")
             break
         else:
             console.print("[bold red]❌ Opção inválida! Tente novamente.[/bold red]")
 
-def imprimir_labirinto(labirinto, jogador):
+def imprimir_labirinto(labirinto, jogador, inicial_personagem, cor_personagem):
     for i, linha in enumerate(labirinto):
         linha_formatada = ""
         for j, celula in enumerate(linha):
@@ -87,41 +94,42 @@ def movimento_valido(labirinto, nova_posicao):
     i, j = nova_posicao
     return 0 <= i < len(labirinto) and 0 <= j < len(labirinto[0]) and labirinto[i][j] != '#'
 
-def jogo_labirinto():
-    console.print("\n🏃‍♂ [bold blue]Você entrou no labirinto! Encontre a saída antes que as portas se fechem![/bold blue] 🌫")
-    
-    labirinto = [
-        ['#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#'],
-        ['#', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', 'S', ' ', '#'],
-        ['#', ' ', '#', ' ', '#', ' ', '#', '#', '#', '#', ' ', '#', ' ', '#', '#', '#', '#', ' ', '#'],
-        ['#', ' ', '#', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'],
-        ['#', ' ', '#', '#', '#', '#', '#', ' ', '#', ' ', '#', '#', '#', ' ', '#', '#', '#', ' ', '#'],
-        ['#', ' ', ' ', ' ', ' ', ' ', '#', ' ', '#', ' ', ' ', ' ', '#', ' ', ' ', ' ', '#', ' ', '#'],
-        ['#', '#', '#', '#', '#', ' ', '#', ' ', '#', '#', '#', ' ', '#', '#', '#', ' ', '#', ' ', '#'],
-        ['#', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'],
-        ['#', ' ', '#', ' ', '#', '#', '#', '#', '#', ' ', '#', ' ', '#', '#', '#', '#', '#', ' ', '#'],
-        ['#', ' ', '#', ' ', ' ', ' ', ' ', ' ', '#', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'],
-        ['#', ' ', '#', '#', '#', '#', '#', ' ', '#', ' ', '#', ' ', '#', '#', '#', ' ', '#', ' ', '#'],
-        ['#', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', '#', ' ', ' ', ' ', '#', ' ', ' ', ' ', '#'],
-        ['#', '#', '#', '#', '#', ' ', '#', '#', '#', '#', '#', ' ', '#', '#', '#', ' ', '#', ' ', '#'],
-        ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'],
-        ['#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#']
-    ]
+def jogo_labirinto(personagem):
+    inicial_personagem, cor_personagem = personagem
+    console.print("\n🏃‍♂ [bold blue]Você entrou no labirinto! Encontre a saída antes que as portas se fechem![/bold blue] 🏃‍♂")
 
-    jogador = (1, 1)
+    labirinto = carregar_labirinto('labirinto.csv')
+
+    jogador = (1, 1)  
     while True:
-        imprimir_labirinto(labirinto, jogador)
-        movimento = input("\n🎯 Use W A S D para mover: ").strip().upper()
-        i, j = jogador
-        nova_posicao = (i - 1, j) if movimento == 'W' else (i + 1, j) if movimento == 'S' else (i, j - 1) if movimento == 'A' else (i, j + 1) if movimento == 'D' else jogador
+        imprimir_labirinto(labirinto, jogador, inicial_personagem, cor_personagem)
+        movimento = input("\n🎯 Use W A S D para mover ou 'sair' para encerrar o jogo: ").strip().upper()
+        
+        i, j = jogador 
+        
+        if movimento == 'W': 
+            nova_posicao = (i - 1, j)
+        elif movimento == 'S': 
+            nova_posicao = (i + 1, j)
+        elif movimento == 'A':  
+            nova_posicao = (i, j - 1)
+        elif movimento == 'D': 
+            nova_posicao = (i, j + 1)
+        elif movimento == "SAIR":
+            console.print("\n👋 [bold red]Saindo do jogo...[/bold red] ✨\n")
+            break
+        else:
+            console.print("[bold red]❌ Movimento inválido! Use apenas W, A, S ou D.[/bold red]")
+            continue
+
         if movimento_valido(labirinto, nova_posicao):
             jogador = nova_posicao
+
         if labirinto[jogador[0]][jogador[1]] == 'S':
-            imprimir_labirinto(labirinto, jogador)
+            imprimir_labirinto(labirinto, jogador, inicial_personagem, cor_personagem)
             console.print("🎉 [bold gold]Parabéns! Você encontrou a saída![/bold gold] 🎊")
             break
 
 if __name__ == "__main__":
-
     introducao()
     exibir_menu()
