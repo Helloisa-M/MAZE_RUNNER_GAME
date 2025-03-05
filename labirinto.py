@@ -12,7 +12,7 @@ def carregar_labirinto(labirinto):
         leitor = csv.reader(arquivo)
         return [list(linha[0]) for linha in leitor]
     
-def gerar_saida(labirinto, colunas, linhas):
+def gerar_saida(labirinto, colunas, linhas):yo
     while True:
       posicao_c =  random.randint(0, colunas)
       posicao_l =  random.randint(0, linhas)
