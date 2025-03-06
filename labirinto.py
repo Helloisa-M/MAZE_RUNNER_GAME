@@ -100,6 +100,10 @@ def exibir_menu():
             console.print("[bold red]❌ Opção inválida! Tente novamente.[/bold red]")
 
 
+def movimento_valido(labirinto, nova_posicao):
+    i, j = nova_posicao
+    return 0 <= i < len(labirinto) and 0 <= j < len(labirinto[0]) and labirinto[i][j] != '#'
+
 def imprimir_labirinto(labirinto, jogador, inicial_personagem, cor_personagem):
     os.system('cls')
 
@@ -114,9 +118,7 @@ def imprimir_labirinto(labirinto, jogador, inicial_personagem, cor_personagem):
                 linha_formatada += f"{celula} "
         console.print(linha_formatada)
 
-def movimento_valido(labirinto, nova_posicao):
-    i, j = nova_posicao
-    return 0 <= i < len(labirinto) and 0 <= j < len(labirinto[0]) and labirinto[i][j] != '#'
+
 
 def jogo_labirinto(personagem):
     inicial_personagem, cor_personagem = personagem
