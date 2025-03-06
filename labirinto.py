@@ -16,7 +16,6 @@ def gerar_saida(labirinto, colunas, linhas):
     while True:
       posicao_c =  random.randint(0, colunas)
       posicao_l =  random.randint(0, linhas)
-      print(f"{posicao_c}  {posicao_l}")
       if labirinto[posicao_l][posicao_c] == " " and (posicao_l != 1 and posicao_c != 1):
           labirinto[posicao_l][posicao_c] = "🚪"
           break
