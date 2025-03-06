@@ -43,7 +43,7 @@ def escolher_personagem():
     }
     
     for num, (nome, _, cor) in personagens.items():
-        console.print(f"[bold {cor}] {num}. {nome}[/bold {cor}]")o
+        console.print(f"[bold {cor}] {num}. {nome}[/bold {cor}]")
     
     escolha_p = input("\n🎮 Escolha um personagem: ")
 
