@@ -43,7 +43,7 @@ def escolher_personagem():
     }
     
     for num, (nome, _, cor) in personagens.items():
-        console.print(f"[bold {cor}] {num}. {nome}[/bold {cor}]")
+        console.print(f"[bold {cor}] {num}. {nome}[/bold {cor}]")o
     
     escolha_p = input("\n🎮 Escolha um personagem: ")
 
@@ -156,7 +156,7 @@ def jogo_labirinto(personagem):
         else:
             console.print("[bold red]❌ Movimento inválido! Use apenas W, A, S ou D.[/bold red]")
             continue
-
+            
         if movimento_valido(labirinto, nova_posicao):
             jogador = nova_posicao
 
