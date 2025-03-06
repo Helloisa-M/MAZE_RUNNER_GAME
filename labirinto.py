@@ -16,6 +16,7 @@ def gerar_saida(labirinto, colunas, linhas):
     while True:
       posicao_c =  random.randint(0, colunas)
       posicao_l =  random.randint(0, linhas)
+      print(f"{posicao_c}  {posicao_l}")
       if labirinto[posicao_l][posicao_c] == " " and (posicao_l != 1 and posicao_c != 1):
           labirinto[posicao_l][posicao_c] = "🚪"
           break
@@ -99,10 +100,6 @@ def exibir_menu():
             console.print("[bold red]❌ Opção inválida! Tente novamente.[/bold red]")
 
 
-def movimento_valido(labirinto, nova_posicao):
-    i, j = nova_posicao
-    return 0 <= i < len(labirinto) and 0 <= j < len(labirinto[0]) and labirinto[i][j] != '#'
-
 def imprimir_labirinto(labirinto, jogador, inicial_personagem, cor_personagem):
     os.system('cls')
 
@@ -117,6 +114,9 @@ def imprimir_labirinto(labirinto, jogador, inicial_personagem, cor_personagem):
                 linha_formatada += f"{celula} "
         console.print(linha_formatada)
 
+def movimento_valido(labirinto, nova_posicao):
+    i, j = nova_posicao
+    return 0 <= i < len(labirinto) and 0 <= j < len(labirinto[0]) and labirinto[i][j] != '#'
 
 def jogo_labirinto(personagem):
     inicial_personagem, cor_personagem = personagem
@@ -155,7 +155,7 @@ def jogo_labirinto(personagem):
             break
         else:
             console.print("[bold red]❌ Movimento inválido! Use apenas W, A, S ou D.[/bold red]")
-            continue
+            
 
         if movimento_valido(labirinto, nova_posicao):
             jogador = nova_posicao
